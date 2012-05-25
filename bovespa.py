@@ -14,23 +14,12 @@ for y in acao:
     xmldoc = minidom.parseString(site)
     x = xmldoc.getElementsByTagName('Papel')
     for i in x:
-        codigo     = i.attributes['Codigo'].value
-        nome       = i.attributes['Nome'].value
-        data_atual = i.attributes['Data'].value
-        abertura   = i.attributes['Abertura'].value.replace(',','.')
-        minimo     = i.attributes['Minimo'].value.replace(',','.')
-        maximo     = i.attributes['Maximo'].value.replace(',','.')
-        atual      = i.attributes['Ultimo'].value.replace(',','.')
-        oscilacao  = i.attributes['Oscilacao'].value.replace(',','.')
-        
-        print u'Código: %s' % codigo
-        print u'Nome: %s' % nome
-        print u'Última atualização: %s' % data_atual
-        print u'Abertura: %s' % abertura
-        print u'Mínimo: %s' % minimo
-        print u'Máximo: %s' % maximo
-        print u'Atual: %s' % atual
-        print u'Oscilação: %s' % oscilacao
+        print u'Código: %s ' % i.attributes['Codigo'].value
+        print u'Nome: %s ' % i.attributes['Nome'].value
+        print u'Última atualização: %s ' % i.attributes['Data'].value
+        print u'Abertura: %s ' % i.attributes['Abertura'].value.replace(',','.')
+        print u'Mínimo: %s ' % i.attributes['Minimo'].value.replace(',','.')
+        print u'Máximo: %s ' % i.attributes['Maximo'].value.replace(',','.')
+        print u'Atual: %s ' % i.attributes['Ultimo'].value.replace(',','.')
+        print u'Oscilação: %s ' % i.attributes['Oscilacao'].value.replace(',','.')
         print ''
-
-raw_input()
