@@ -1,4 +1,4 @@
-bovespa
-=======
+bovespa.py
+============
 
-Cotações BM&F Bovespa
+Cotações do site da BM&F Bovespa em Python
