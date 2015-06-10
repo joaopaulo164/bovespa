@@ -34,7 +34,7 @@ def getStock(istock):
 
 if __name__ == '__main__':
     multiprocessing.freeze_support()
-    pool = multiprocessing.Pool(66)
+    pool = multiprocessing.Pool(len(stock))
     contrib = pool.map(getStock, stock)
     for istock, (code, name, atual) in zip(stock, contrib):
         print("%s %s -> R$ atual: %s " % (code, name, atual))
