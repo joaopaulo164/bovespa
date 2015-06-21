@@ -38,12 +38,6 @@ def getStock(istock):
         oscilacao   = i.attributes['Oscilacao'].value.replace(',','.')
     return [code, name, atualizacao, abertura, minimo, maximo, ultimo, oscilacao]
 
-def terminal_print():
-    pool = Pool(len(stocks))
-    contrib = pool.map(getStock, stocks)
-    for istock, (code, name, atualizacao, abertura, minimo, maximo, ultimo, oscilacao) in zip(stocks, contrib):
-        print(u"%s %s -> ultima cotacao: %s " % (code, name, ultimo))
-
 def mysql_save():
     HOSTNAME = raw_input("Hostname: ")
     USERNAME = raw_input("Username: ")
@@ -110,11 +104,7 @@ def mysql_save():
     finally:
         cursor.close()
         db.close()
-
-def mysql_save_with_orm():
-    pass #todo
         
 if __name__ == '__main__':
     freeze_support()
-    terminal_print()
-    #mysql_save()
+    mysql_save()
