@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # use python27
 
+import sys
 import urllib2
 from xml.dom import minidom
 from multiprocessing import Pool, freeze_support
@@ -75,7 +76,8 @@ def mysql_save():
         cursor.close()
         db.close()
 
-    freeze_support()
+    if sys.platform == "win32":
+        freeze_support()
     pool = Pool(len(stocks))
     contrib = pool.map(getStock, stocks)
     
@@ -106,5 +108,6 @@ def mysql_save():
         db.close()
         
 if __name__ == '__main__':
-    freeze_support()
+    if sys.platform == "win32":
+        freeze_support()
     mysql_save()
