@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # use python27
 
-import sys
 import urllib2
 from xml.dom import minidom
 from multiprocessing import Pool, freeze_support
@@ -40,6 +39,5 @@ def terminal_print():
         print(u"%s %s -> ultima cotacao: %s " % (code, name, ultimo))
 
 if __name__ == '__main__':
-    if sys.platform == "win32":
-        freeze_support()
+    freeze_support()
     terminal_print()
