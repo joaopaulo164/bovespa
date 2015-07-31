@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
-# use python27
 
-import urllib2
+try:
+   from urllib.request import Request, build_opener
+except:
+   from urllib2 import Request as Request
+   from urllib2 import build_opener
 from xml.dom import minidom
+import time
 
 stocks = ['ABEV3','BBAS3','BBDC3','BBDC4','BBSE3','BRAP4','BRFS3','BRKM5','BRML3','BRPR3',
           'BVMF3','CCRO3','CESP6','CIEL3','CMIG4','CPFE3','CPLE6','CRUZ3','CSAN3','CSNA3',
@@ -14,10 +18,10 @@ stocks = ['ABEV3','BBAS3','BBDC3','BBDC4','BBSE3','BRAP4','BRFS3','BRKM5','BRML3
 
 def getStock(istock):
     url = 'http://www.bmfbovespa.com.br/Pregao-Online/ExecutaAcaoAjax.asp?intEstado=1&CodigoPapel=%s' % istock
-    request = urllib2.Request(url)
-    request.add_header("User-Agent", 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0')
-    opener = urllib2.build_opener()
-    site = opener.open(request).read()
+    req = Request(url)
+    req.add_header("User-Agent", 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0')
+    opener = build_opener()
+    site = opener.open(req).read()
     xmldoc = minidom.parseString(site)
     x = xmldoc.getElementsByTagName('Papel')
     for i in x:
@@ -29,11 +33,15 @@ def getStock(istock):
         maximo      = i.attributes['Maximo'].value.replace(',','.')
         ultimo      = i.attributes['Ultimo'].value.replace(',','.')
         oscilacao   = i.attributes['Oscilacao'].value.replace(',','.')
-    print(u"%s %s -> ultima cotacao: %s " % (code, name, ultimo))
+    print(("%s %s -> ultima cotacao: %s " % (code, name, ultimo)))
 
 def terminal_print():
     for i in stocks:
         getStock(i)
         
 if __name__ == '__main__':
+    start = time.strftime("%d %b %Y %H:%M:%S (UTC)", time.gmtime())
+    print('Start %s' % start)
     terminal_print()
+    finish = time.strftime("%d %b %Y %H:%M:%S (UTC)", time.gmtime())
+    print('Finished %s' % finish)

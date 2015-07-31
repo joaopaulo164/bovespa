@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-# use python27
 
-import sys
-import urllib2
+import sys, time
+try:
+   from urllib.request import Request, build_opener
+except:
+   from urllib2 import Request as Request
+   from urllib2 import build_opener
 from xml.dom import minidom
 from multiprocessing import Pool, freeze_support
 
@@ -16,10 +19,10 @@ stocks = ['ABEV3','BBAS3','BBDC3','BBDC4','BBSE3','BRAP4','BRFS3','BRKM5','BRML3
 
 def getStock(istock):
     url = 'http://www.bmfbovespa.com.br/Pregao-Online/ExecutaAcaoAjax.asp?intEstado=1&CodigoPapel=%s' % istock
-    request = urllib2.Request(url)
-    request.add_header("User-Agent", 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0')
-    opener = urllib2.build_opener()
-    site = opener.open(request).read()
+    req = Request(url)
+    req.add_header("User-Agent", 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0')
+    opener = build_opener()
+    site = opener.open(req).read()
     xmldoc = minidom.parseString(site)
     x = xmldoc.getElementsByTagName('Papel')
     for i in x:
@@ -37,9 +40,14 @@ def terminal_print():
     pool = Pool(len(stocks))
     contrib = pool.map(getStock, stocks)
     for istock, (code, name, atualizacao, abertura, minimo, maximo, ultimo, oscilacao) in zip(stocks, contrib):
-        print(u"%s %s -> ultima cotacao: %s " % (code, name, ultimo))
+        print(("%s %s -> ultima cotacao: %s " % (code, name, ultimo)))
 
 if __name__ == '__main__':
+    start = time.strftime("%d %b %Y %H:%M:%S (UTC)", time.gmtime())
+    print('Start %s' % start)
     if sys.platform == "win32":
         freeze_support()
     terminal_print()
+    finish = time.strftime("%d %b %Y %H:%M:%S (UTC)", time.gmtime())
+    print('Finished %s' % finish)
+
