@@ -1,10 +1,10 @@
 
 Cotações da BM&F Bovespa
 ------
-Buscar informações das cotações de todos as ações da BM&F Bovespa.
+Buscar informações das cotações de todas as ações da BM&F Bovespa.
 
-  * bmf-simple.py: Execução em 26.5s
-  * bmf-parallelism.py: Execução em 3.2s
+  * bmf-simple.py 
+  * bmf-parallelism.py
 
 ### Testado com ###
   * python 2.7
